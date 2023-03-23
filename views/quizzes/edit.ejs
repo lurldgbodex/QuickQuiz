@@ -1,0 +1,54 @@
+<h1>Edit Quiz</h1>
+<%- include("../partials/navbar") %>
+<%- include("../partials/messages") %>
+<form method="POST" action="/quizzes/<%= quiz._id %>/edit?_method=PUT">
+  <input type="hidden" name="_method" value="PUT">
+  <div class="form-group">
+    <label for="title">Title:</label>
+    <input type="text" class="form-control" id="title" name="title" value="<%= quiz.title %>" required>
+  </div>
+
+  <% quiz.questions.forEach((question, i) => { %>
+    <div class="form-group">
+      <label for="question<%= i %>">Question <%= i+1 %>:</label>
+      <input type="text" class="form-control" id="question<%= i %>" name="questions[<%= i %>][question]" value="<%= question.question %>" required>
+      <label for="options<%= i %>">Options:</label>
+      <div class="options-group">
+        <% question.options.forEach((option, j) => { %>
+          <input type="text" class="form-control" id="option<%= j+1 %>-<%= i %>" name="questions[<%= i %>][options][<%= j %>]" value="<%= option %>" required>
+        <% }); %>
+      </div>
+      <label for="answer<%= i %>">Answer:</label>
+      <input type="text" class="form-control" id="answer<%= i %>" name="questions[<%= i %>][answer]" value="<%= question.answer %>" required>
+    </div>
+  <% }); %>
+  
+  <div class="form-group">
+    <button type="button" class="btn btn-secondary" onclick="addQuestion()">Add Question</button>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<script>
+  function addQuestion() {
+  let index = document.querySelectorAll('[id^=question]').length;
+  let questionHtml = `
+    <div class="form-group">
+      <label for="question${index}">Question ${index+1}:</label>
+      <input type="text" class="form-control" id="question${index}" name="questions[${index}][question]" required>
+      <label for="options${index}">Options:</label>
+      <div class="options-group">
+        <input type="text" class="form-control" id="option1-${index}" name="questions[${index}][options][0]" required>
+        <input type="text" class="form-control" id="option2-${index}" name="questions[${index}][options][1]" required>
+        <input type="text" class="form-control" id="option3-${index}" name="questions[${index}][options][2]" required>
+        <input type="text" class="form-control" id="option4-${index}" name="questions[${index}][options][3]" required>
+      </div>
+      <label for="answer${index}">Answer:</label>
+      <input type="text" class="form-control" id="answer${index}" name="questions[${index}][answer]" required>
+    </div>
+  `;
+  document.querySelector('button[type="submit"]').insertAdjacentHTML('beforebegin', questionHtml);
+}
+
+</script>

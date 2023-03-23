@@ -1,0 +1,12 @@
+<h1>Reset Password</h1>
+<form method="POST" action="/reset/<%= token %>">
+  <div class="form-group">
+    <label for="password">New Password</label>
+    <input type="password" class="form-control" id="password" name="password" required>
+  </div>
+  <div class="form-group">
+    <label for="confirm-password">Confirm Password</label>
+    <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

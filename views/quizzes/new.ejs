@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Quiz</title>
+    <%- include ("../partials/head") %>
+  </head>
+  <body>
+    <%- include ("../partials/messages") %>
+    <%- include ("../partials/navbar") %>
+
+    <div class="container mt-5">
+      <h1 class="mb-4">Create Quiz</h1>
+      <form method="post" action="/quizzes/new">
+        <div class="form-group">
+          <label for="title">Quiz Title:</label>
+          <input type="text" class="form-control" name="title" required>
+        </div>
+  
+        <h4>Questions:</h4>
+        <div class="form-group" id="questions-container">
+          <div class="question mb-4">
+            <label for="question-0">Question:</label>
+            <input type="text" class="form-control" name="questions[0][question]" id="question-0" required>
+            <label for="option-0-0">Option 1:</label>
+            <input type="text" class="form-control" name="questions[0][options][0]" id="option-0-0" required>
+            <label for="option-0-1">Option 2:</label>
+            <input type="text" class="form-control" name="questions[0][options][1]" id="option-0-1" required>
+            <label for="option-0-2">Option 3:</label>
+            <input type="text" class="form-control" name="questions[0][options][2]" id="option-0-2" required>
+            <label for="option-0-3">Option 4:</label>
+            <input type="text" class="form-control" name="questions[0][options][3]" id="option-0-3" required>
+            <label for="answer-0">Answer:</label>
+            <textarea class="form-control" name="questions[0][answer]" id="answer-0" rows="4" cols="50" required></textarea>            
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <button type="button" class="btn btn-secondary" onclick="addQuestion()">Add Question</button>
+        </div>
+  
+        <button type="submit" class="btn btn-primary">Create Quiz</button>
+      </form>
+    </div>
+    <%- include ("../partials/scripts") %>
+    <script>
+      function addQuestion() {
+        let index = document.querySelectorAll('[id^=question]').length;
+        let questionHtml = `
+      <div class="form-group">
+      <label for="question${index}">Question ${index+1}:</label>
+      <input type="text" class="form-control" id="question${index}" name="questions[${index}][question]" required>
+      <label for="options${index}">Options:</label>
+      <div class="options-group">
+        <input type="text" class="form-control" id="option1-${index}" name="questions[${index}][options][0]" required>
+        <input type="text" class="form-control" id="option2-${index}" name="questions[${index}][options][1]" required>
+        <input type="text" class="form-control" id="option3-${index}" name="questions[${index}][options][2]" required>
+        <input type="text" class="form-control" id="option4-${index}" name="questions[${index}][options][3]" required>
+      </div>
+      <label for="answer${index}">Answer:</label>
+      <input type="text" class="form-control" id="answer${index}" name="questions[${index}][answer]" required>
+    </div>
+  `;
+  document.querySelector('button[type="submit"]').insertAdjacentHTML('beforebegin', questionHtml);
+}
+
+    </script>    
+  </body>
+</html>
+
+

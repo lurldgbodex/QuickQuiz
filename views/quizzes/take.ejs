@@ -1,0 +1,18 @@
+<h1><%= title %></h1>
+<%- include ("../partials/navbar"); %>
+<%- include ("../partials/messages"); %>
+<form action="/quizzes/<%= quizId %>/submit" method="POST">
+
+  <% questions.forEach((question, index) => { %>
+    <h3><%= index + 1 %>. <%= question.question %></h3>
+
+    <% question.options.forEach((option) => { %>
+      <div>
+        <input type="radio" name="answer_<%= index %>" id="answer_<%= index %>_<%= option %>" value="<%= option %>">
+        <label for="answer_<%= index %>_<%= option %>"><%= option %></label>
+      </div>
+    <% }); %>
+  <% }); %>
+
+  <button type="submit">Submit</button>
+</form>
